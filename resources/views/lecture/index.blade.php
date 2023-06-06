@@ -14,14 +14,14 @@
 		@if(count($lectures) > 0)
 		    <div class="row">
                 <div class="col-md-6 text-left">
-                    
+
                 </div>
                 <div class="col-md-6 text-right">
                      <h5 style="font-weight: bolder" class="header smaller theme-color lighter blue p-1">عدد النتائج  :  {{count($lectures)}} </h5>
 
                 </div>
 		    </div>
-                
+
                 <div class="row">
                     <div class="col-xs-12 table-responsive">
                         <table id="saleriesemployees" class="table table-bordered">
@@ -29,8 +29,8 @@
                                 <tr>
                                     <th>#</th>
                                     <th>الاسم</th>
-                                    <th> القسم</th>
-                                    <th> عدد الساعات</th>
+                                    <th> المساق</th>
+                                    <th> المكان</th>
                                     <th>عمليات</th>
 
                                 </tr>
@@ -45,9 +45,9 @@
                                 ?>
                                 <tr>
                                     <td>{{ $i++ }}</td>
-                                    <td>{{ $p['title'] }}</td>
-                                    <td>{{ $p['dept_name'] }}</td>
-                                    <td>{{ $p['credits'] }}</td>
+                                    <td>{{ $p['name'] }}</td>
+                                    <td>{{ $p['course_id'] }}</td>
+                                    <td>{{ $p['location'] }}</td>
 
                                     <td>
                                         <a class="btn btn-primary" href="{{ route('lectures.edit',$p['lecture_id'])}}">تعديل</a>
@@ -58,14 +58,14 @@
                                         <button type="submit" class="btn btn-danger">حذف</button>
                                         </form>
 
- 
+
                                     </td>
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
                     </div>
-       
+
                 </div>
         @endif
 		</div>
