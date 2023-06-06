@@ -9,40 +9,43 @@
 <p>
 1. Install Required Software:
 
-2. Make sure you have PHP installed on your system. You can check by running php -v in the command line.
+ Make sure you have PHP installed on your system. You can check by running php -v in the command line.
 Install Composer, a dependency manager for PHP. You can find installation instructions at https://getcomposer.org/download/.
-Clone the Repository:
 
-3. Open your command line or terminal and navigate to the directory where you want to clone the repository.
+2. Clone the Repository:
+
+Open your command line or terminal and navigate to the directory where you want to clone the repository.
 Run the following command to clone the repository: git clone <repository-url>
 Replace <repository-url> with the actual URL of the repository you want to clone.
-Install Dependencies:
 
-4. Navigate to the project's directory: cd <project-directory>
+3. Install Dependencies:
+
+Navigate to the project's directory: cd <project-directory>
 Run composer install to install the project dependencies defined in the composer.json file. This command will create a vendor directory in your project.
-Create Environment File:
 
-5. Copy the .env.example file to a new file called .env: cp .env.example .env
+4. Create Environment File:
+
+Copy the .env.example file to a new file called .env: cp .env.example .env
 Update the necessary configurations in the .env file, such as database credentials.
-Generate Application Key:
 
-6. Run the following command to generate an application key: php artisan key:generate
+5. Generate Application Key:
+
+Run the following command to generate an application key: php artisan key:generate
 This key is used for secure sessions and other encrypted data within the application.
-Set Up Database:
 
-7. Create a new database for your Laravel project.
+6. Set Up Database:
+
+Create a new database for your Laravel project and run the DDL.sql file.
 Update the .env file with the database details (database name, username, password).
-Run Migrations:
 
-8. Run the following command to migrate the database: php artisan migrate
-This command will create the necessary database tables based on the migrations defined in the project.
-Serve the Application:
+7. Serve the Application:
+You have need to download xampp or wamp to run the server .
 
-9. Run the following command to start the Laravel development server: php artisan serve
+Run the following command to start the Laravel development server: php artisan serve
 This will start the server, and you can access the application in your browser at http://localhost:8000.
 Access the Application:
 
-10. Open your web browser and visit http://localhost:8000 (or the URL shown in the console after running php artisan serve).
+Open your web browser and visit http://localhost:8000 (or the URL shown in the console after running php artisan serve).
 You should see your Laravel application up and running.
 </p>
 
@@ -52,4 +55,15 @@ You should see your Laravel application up and running.
 2. AttendanceDML.sql => you need to run this file to insert some data into the tables.
 </p>
 
+
+<h2>Interfaces</h2>
+<span>You can shown the views in resources folder and then in views folder</span>
+<p>
+1. LoginPage => you can login as teacher or system manager.
+2. UserPage => you can see the user information and you can add and edit it.
+3. CoursePage => you can see the course information and you can add and edit it.
+4. StudentPage => you can see the student information and you can add and edit it.
+5. InstructorPage => you can see the instructor information and you can add and edit it.
+5. AttendancePage => you can see the attendance information and you can add and edit it.
+</p>
 
