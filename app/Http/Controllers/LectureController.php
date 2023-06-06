@@ -9,7 +9,7 @@ class LectureController extends Controller
 {
     public function index()
     {
-        $lectures = DB::select('select * from lecture');
+        $lectures = DB::select('select * from lecture left join course on lecture.course_id = course.course_id');
         return view('lecture.index',compact('lectures'));
     }
 
@@ -66,13 +66,11 @@ class LectureController extends Controller
      */
     public function edit(string $id)
     {
-        $courses= DB::select('select * from course')->pluck('course_id', 'course_id')->toArray();
-        // $lectures = collect(DB::select('select * from course'))->pluck('title','course_id')->toArray();
-        // $sections = collect(DB::select('select * from section'))->pluck('sec_id','sec_id')->toArray();
-        // $time_slots = collect(DB::select('select * from time_slot'))->pluck('day'+'  start_hr - '+'end_hr','time_slot_id')->toArray();
+        $courses= collect(DB::select('select * from course'))->pluck('title','course_id')->toArray();
 
+        $elm = DB::select('select * from lecture i where i.lecture_id = :lecture_id', ['lecture_id' => $id]);
 
-        return view('lecture.edit',compact('courses'));
+        return view('lecture.edit',compact('courses','elm'));
 
     }
 
@@ -86,9 +84,7 @@ class LectureController extends Controller
         $location = ($request->has('location')) ? $data['location'] : "";
         $name = ($request->has('name')) ? $data['name'] : "";
 
-        //$course_id = ($request->has('course_id')) ? $data['course_id'] : "";
-
-        DB::update(' update lecture set course_id=? ,location =? ,name=? where lecture _id = ?', [ $course_id,$location,$name,$id]);
+        DB::update(' update lecture set course_id=? ,location =? ,name=? where lecture_id = ?', [ $course_id,$location,$name,$id]);
 
 
         return redirect()->route('lectures.index')->with('success',"تم التعديل   بنجاح");
@@ -99,7 +95,7 @@ class LectureController extends Controller
      */
     public function destroy(string $id)
     {
-        $deleted = DB::delete('delete from lecture  where lecture _id=?',[$id]);
+        $deleted = DB::delete('delete from lecture  where lecture_id=?',[$id]);
         return redirect()->route('lectures.index')->with('success',"تم الحذف   بنجاح");
 
 

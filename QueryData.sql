@@ -39,15 +39,15 @@ insert into instructor (instructor_id,name,salary,dept_name) values (6, 'مصط�
 
 -- INSERT Query TO Course
 insert into course (course_id,title,dept_name,credits,course_type,book_id,instructor_id) values (1,'electrical' , 'هندسة كهرباء',3, '1' , 1,3);
-insert into course (course_id,title,dept_name,credits,course_type,book_id,instructor_id) values (2,'electrical' , 'هندسة كهرباء',3, '1' , 2,4);
-insert into course (course_id,title,dept_name,credits,course_type,book_id,instructor_id) values (3,'electrical' , 'هندسة حاسوب',3, '1' , 3,5);
+insert into course (course_id,title,dept_name,credits,course_type,book_id,instructor_id) values (2,'digital' , 'هندسة كهرباء',3, '1' , 2,4);
+insert into course (course_id,title,dept_name,credits,course_type,book_id,instructor_id) values (3,'OS' , 'هندسة حاسوب',3, '1' , 3,5);
 
 -- INSERT Query TO Lecture
 insert into lecture (lecture_id,course_id, location,name) values (1,1,'مبني الهندسة','المحاضرة الاولى');
 insert into lecture (lecture_id,course_id, location,name) values (2,1,'مبني الهندسة','المحاضرة التانية');
 insert into lecture (lecture_id,course_id, location,name) values (3,1,'مبني الهندسة','المحاضرة الثالثة');
-insert into lecture (lecture_id,course_id, location,name) values (4,2,'مبني الهندسة','المحاضرة الثالثة');
-insert into lecture (lecture_id,course_id, location,name) values (5,2,'مبني الهندسة','المحاضرة الثالثة');
+insert into lecture (lecture_id,course_id, location,name) values (4,2,'مبني الهندسة','المحاضرة الاولى');
+insert into lecture (lecture_id,course_id, location,name) values (5,2,'مبني الهندسة','المحاضرة التانية');
 insert into lecture (lecture_id,course_id, location,name) values (6,2,'مبني الهندسة','المحاضرة الثالثة');
 
 
@@ -120,6 +120,7 @@ insert into attendance (std_id,lecture_id,isAttend) values (7,4,true);
 insert into attendance (std_id,lecture_id,isAttend) values (7,5,true);
 insert into attendance (std_id,lecture_id,isAttend) values (7,6,false);
 
+select * FROM course
 
 --Display the list of students who attended less than 25% of lectures.
 SELECT s.std_id, s.first_name, s.last_name
@@ -127,7 +128,7 @@ FROM student s
 JOIN attendance a ON s.std_id = a.std_id
 JOIN lecture l ON a.lecture_id = l.lecture_id
 GROUP BY s.std_id, s.first_name, s.last_name
-HAVING SUM(CASE WHEN a.isAttend = true THEN 1 ELSE 0 END) / COUNT(*) < 0.25;
+HAVING SUM(CASE WHEN a.isAttend = true THEN 1 ELSE 0 END) / (COUNT(*)From attendance) < 0.25;
 
 
 
@@ -147,10 +148,10 @@ FROM student s
 CROSS JOIN lecture l
 LEFT JOIN attendance a ON s.std_id = a.std_id AND l.lecture_id = a.lecture_id
 GROUP BY s.std_id, s.first_name, s.last_name, l.lecture_id, l.name
-HAVING SUM(CASE WHEN a.isAttend = true THEN 1 ELSE 0 END) / COUNT(*) > 0.8
-    AND SUM(CASE WHEN a.isAttend = true THEN 1 ELSE 0 END) < COUNT(*);
+HAVING SUM(CASE WHEN a.isAttend = true THEN 1 ELSE 0 END) / (COUNT(*) from attendance) > 0.8
+    AND SUM(CASE WHEN a.isAttend = true THEN 1 ELSE 0 END) < (COUNT(*) from attendance);
 
--- Display the list of students who missed 3 consecutive
+    -- Display the list of students who missed 3 consecutive
 --lectures.
 
 SELECT s.std_id, s.first_name, s.last_name
@@ -181,30 +182,6 @@ JOIN (
 WHERE missing_counts.num_missing > (SELECT COUNT(*) FROM student) - (SELECT COUNT(*) FROM student WHERE join_date > l.date)
 GROUP BY l.lecture_id, l.name;
 
-
---another solution
-SELECT l.lecture_id, l.name
-FROM lecture l
-JOIN attendance a ON l.lecture_id = a.lecture_id
-JOIN (
-    SELECT lecture_id, SUM(CASE WHEN isAttend = 0 THEN 1 ELSE 0 END) AS num_missing
-    FROM attendance
-    WHERE lecture_id NOT IN (
-        SELECT DISTINCT lecture_id
-        FROM attendance
-        WHERE isAttend = true
-          AND std_id IN (
-              SELECT std_id
-              FROM student
-              WHERE join_date > l.date
-          )
-    )
-    GROUP BY lecture_id
-) AS missing_counts ON l.lecture_id = missing_counts.lecture_id
-WHERE missing_counts.num_missing > (SELECT COUNT(*) FROM attendance WHERE lecture_id = l.lecture_id AND isAttend = true)
-GROUP BY l.lecture_id, l.name;
-
-
 --Display the students ordered by their ‘commitment’ from the
 --most committed to the least. (commitment = في لتزامoا
 --(الحضور
@@ -213,25 +190,6 @@ FROM student s
 JOIN attendance a ON s.std_id = a.std_id
 GROUP BY s.std_id, s.first_name, s.last_name
 ORDER BY SUM(CASE WHEN a.isAttend = true THEN 1 ELSE 0 END) DESC;
-
-
---تسجيل معلومة حضور الطالب الفلني للمحاضرة الفلنية أو تغيبه عنها
---UPDATE attendance
---SET isAttend = true -- لتسجيل حضور الطالب
--- SET isAttend = false -- لتسجيل غياب الطالب
---WHERE std_id = 'رقم الطالب الفلاني' AND lecture_id = 'رقم المحاضرة الفلانية';
-
-
---تسجيل الحضور باستخدام الرقم الجامعي أو رقم الجوال أو الاسم بسرعة مع اكمال التلقائي
-SELECT std_id, first_name, last_name
-FROM student
-WHERE std_id = 'رقم الطالب المحدد' OR phone_num = 'رقم الجوال المحدد' OR CONCAT(first_name, ' ', last_name) LIKE '%اسم الطالب المحدد%';
-
---عرض جميع المحاضرات المنتمية الى مساق معين
-SELECT lecture_id, name, location, date
-FROM lecture
-WHERE course_id = 'معرف المساق المعين';
-
 
 
 --عرض تقرير الحضور لكل طالب في مساق معين بسرعة عند طلب الطالب ذلك أثناء تسجيل حضوره في أحد المحاضرات. مع توفير وسيلة لتعديل الخطأ في التقرير بسرعة
@@ -250,11 +208,9 @@ FROM
   JOIN lecture l ON c.course_id = l.course_id
   LEFT JOIN attendance a ON s.std_id = a.std_id AND l.lecture_id = a.lecture_id
 WHERE
-  c.course_id = 'معرف المساق المعين';
+  c.course_id = '1';
 
-
-
---عرض كشوف الحضور والغياب لكل محاضرة من المحاضرات مع نسبة الحضور وعدد الحضور في كل محاضرة
+  --عرض كشوف الحضور والغياب لكل محاضرة من المحاضرات مع نسبة الحضور وعدد الحضور في كل محاضرة
 
   SELECT
   l.lecture_id,
@@ -262,7 +218,7 @@ WHERE
   l.location,
   COUNT(CASE WHEN a.isAttend = true THEN 1 END) AS attendance_count,
   COUNT(CASE WHEN a.isAttend = false THEN 1 END) AS absence_count,
-  COUNT(CASE WHEN a.isAttend = true THEN 1 END) / COUNT(*) * 100 AS attendance_percentage
+  (COUNT(CASE WHEN a.isAttend = true THEN 1 END) / (COUNT(*) from attendance))* 100 AS attendance_percentage
 FROM
   lecture l
   LEFT JOIN attendance a ON l.lecture_id = a.lecture_id
@@ -271,9 +227,4 @@ GROUP BY
   l.name,
   l.location;
 
---البحث عن كشف محاضرة معينة باستخدام عنوان المحاضرة
 
-SELECT l.lecture_id, l.name, l.location, l.date, c.title
-FROM lecture l
-JOIN course c ON l.course_id = c.course_id
-WHERE l.name = 'عنوان المحاضرة';

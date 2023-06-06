@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class InstructorController extends Controller
 {
@@ -11,8 +12,7 @@ class InstructorController extends Controller
      */
     public function index()
     {
-        $instructors = DB::select('select *FROM instructor');
-
+        $instructors = DB::select('select * FROM instructor');
         return view('instructors.index', compact('instructors'));
     }
 
@@ -22,8 +22,9 @@ class InstructorController extends Controller
     public function create()
     {
         $departments = collect(DB::select('select * from department'))->pluck('dept_name', 'dept_name')->toArray();
+        $users = collect(DB::select('select * from users'))->pluck('name', 'user_id')->toArray();
 
-        return view('instructors.create', compact('departments'));
+        return view('instructors.create', compact('departments','users'));
     }
 
     /**
@@ -35,11 +36,13 @@ class InstructorController extends Controller
         $name = ($request->has('name')) ? $data['name'] : "";
         $salary = ($request->has('salary')) ? $data['salary'] : "";
         $dept_name = ($request->has('dept_name')) ? $data['dept_name'] : "";
+        $user_id = ($request->has('user_id')) ? $data['user_id'] : "";
+
         //$course_id = ($request->has('course_id')) ? $data['course_id'] : "";
         $instructor_id = DB::scalar("select max(instructor_id) from instructor") + 1;
 
-        DB::insert('insert into instructor (instructor_id,name,salary,dept_name) values (?, ? , ?,?, ? , ?)',
-            [$instructor_id, $first_name, $second_name, $third_name, $last_name, $dept_name]);
+        DB::insert('insert into instructor (instructor_id,name,salary,dept_name,user_id) values (?, ? , ?,?,?)',
+            [$instructor_id,$name, $salary, $dept_name,$user_id]);
 
         return redirect()->route('instructors.index')->with('success', "تم الاضافة   بنجاح");
     }
@@ -60,8 +63,9 @@ class InstructorController extends Controller
         $elm = DB::select('select * from instructor i where i.instructor_id = :instructor_id', ['instructor_id' => $id]);
 
         $departments = collect(DB::select('select * from department'))->pluck('dept_name', 'dept_name')->toArray();
+        $users = collect(DB::select('select * from users'))->pluck('name', 'user_id')->toArray();
 
-        return view('instructors.edit', compact('departments', 'elm'));
+        return view('instructors.edit', compact('departments','users', 'elm'));
     }
 
     /**
@@ -76,7 +80,7 @@ class InstructorController extends Controller
         //$course_id = ($request->has('course_id')) ? $data['course_id'] : "";
 
 
-        DB::update(' update instructor set name=? ,salary =? ,dept_name=?  where instructor_id = ?',
+        DB::update('update instructor set name=? ,salary =? ,dept_name=?  where instructor_id = ?',
             [$name, $salary, $dept_name, $id]);
 
 

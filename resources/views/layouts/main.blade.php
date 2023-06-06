@@ -38,6 +38,8 @@
 </head>
 
 <body>
+<iframe id="txtArea1" style="display:none"></iframe>
+
     <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
@@ -76,34 +78,34 @@
                                 </ul>
                             </li>
                             <li class="">
-                                <a href="{{route('instructors.create')}}" aria-expanded="true">
+                                <a href="{{route('instructors.index')}}" aria-expanded="true">
                                     <i class="ti-user"></i>
                                     <span>المحاضرين</span>
                                 </a>
                                 <ul class="collapse">
-                                    <li class=""><a href="{{route('instructors.index')}}">اضافة</a></li>
-                                    <li><a href="{{route('instructors.create')}}">عرض</a></li>
+                                    <li class=""><a href="{{route('instructors.create')}}">اضافة</a></li>
+                                    <li><a href="{{route('instructors.index')}}">عرض</a></li>
                                 </ul>
                             </li>
                             <li class="">
-                                <a href="{{route('users.index')}}" aria-expanded="true">
+                                <a href="{{route('courses.index')}}" aria-expanded="true">
                                     <i class="ti-package"></i>
                                     <span>المساقات</span>
                                 </a>
                                 <ul class="collapse">
-                                    <li class=""><a href="{{route('users.create')}}">اضافة</a></li>
-                                    <li><a href="{{route('users.index')}}">عرض</a></li>
+                                    <li class=""><a href="{{route('courses.create')}}">اضافة</a></li>
+                                    <li><a href="{{route('courses.index')}}">عرض</a></li>
                                 </ul>
                             </li>
 
                             <li class="">
-                                <a href="{{route('users.create')}}" aria-expanded="true">
+                                <a href="{{route('lectures.create')}}" aria-expanded="true">
                                     <i class="ti-book"></i>
                                     <span>المحاضرات</span>
                                 </a>
                                 <ul class="collapse">
-                                    <li class=""><a href="{{route('users.create')}}">اضافة</a></li>
-                                    <li><a href="{{route('users.create')}}">عرض</a></li>
+                                    <li class=""><a href="{{route('lectures.create')}}">اضافة</a></li>
+                                    <li><a href="{{route('lectures.create')}}">عرض</a></li>
                                 </ul>
                             </li>
                             <li class="">
@@ -114,20 +116,43 @@
                                 <ul class="collapse">
                                     <li class=""><a href="{{route('students.create')}}">اضافة</a></li>
                                     <li><a href="{{route('students.index')}}">عرض</a></li>
-                                    <li><a href="{{route('users.create')}}">تسجيل طالب في شعبة</a></li>
+                                    <!-- <li><a href="{{route('users.create')}}">تسجيل طالب في مساق</a></li> -->
                                 </ul>
                             </li>
                             <li class="">
-                                <a href="{{route('users.create')}}" aria-expanded="true">
+                                <a href="{{route('studentcourses.index')}}" aria-expanded="true">
+                                    <i class="ti-user"></i>
+                                    <span>طلبة المساقات</span>
+                                </a>
+                                <ul class="collapse">
+                                    <li class=""><a href="{{route('studentcourses.create')}}">اضافة</a></li>
+                                    <li><a href="{{route('studentcourses.index')}}">عرض</a></li>
+                                </ul>
+                            </li>
+                            <li class="">
+                                <a href="{{route('attendance.index')}}" aria-expanded="true">
                                     <i class="ti-write"></i>
                                     <span>الحضور</span>
                                 </a>
                                 <ul class="collapse">
-                                    <li class=""><a href="{{route('users.create')}}">اضافة</a></li>
-                                    <li><a href="{{route('users.create')}}">عرض</a></li>
+                                    <li class=""><a href="{{route('attendance.create')}}">اضافة</a></li>
+                                    <li><a href="{{route('attendance.index')}}">عرض</a></li>
                                 </ul>
                             </li>
-                             
+                            <li class="">
+                                <a href="{{route('report.courses')}}" aria-expanded="true">
+                                    <i class="ti-write"></i>
+                                    <span>التقارير</span>
+                                </a>
+                                <ul class="collapse">
+                                    <li class=""><a href="{{route('report.courses')}}">محاضرات المساق</a></li>
+                                    <li><a href="{{route('report.lectures')}}">كشف محاضرة</a></li>
+                                    <li><a href="{{route('report.lectureattendence')}}">كشف حضور محاضرات</a></li>
+
+                                    
+                                </ul>
+                            </li>
+
                         </ul>
                     </nav>
                 </div>
@@ -146,7 +171,7 @@
                             <span></span>
                             <span></span>
                         </div>
-                         
+
                     </div>
                     <!-- profile info & task notification -->
                     <div class="col-md-6 col-sm-4 clearfix">
@@ -164,7 +189,7 @@
                 </div>
             </div>
             <!-- header area end -->
-           
+
             <div class="main-content-inner">
             @yield('content')
             </div>
@@ -179,7 +204,7 @@
         <!-- footer area end-->
     </div>
     <!-- page container area end -->
-    
+
     <!-- jquery latest version -->
     <script src="{{ URL::asset('assets/js/vendor/jquery-2.2.4.min.js')}}"></script>
     <!-- bootstrap 4 js -->
@@ -207,6 +232,41 @@
     <!-- others plugins -->
     <script src="{{ URL::asset('assets/js/plugins.js')}}"></script>
     <script src="{{ URL::asset('assets/js/scripts.js')}}"></script>
+    <script type="text/javascript"> 
+function fnExcelReport()
+{
+    var tab_text="<table border='2px'><tr bgcolor='#87AFC6'>";
+    var textRange; var j=0;
+    tab = document.getElementById('testTable'); // id of table
+
+    for(j = 0 ; j < tab.rows.length ; j++) 
+    {     
+        tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
+        //tab_text=tab_text+"</tr>";
+    }
+
+    tab_text=tab_text+"</table>";
+    tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
+    tab_text= tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
+    tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
+
+    var ua = window.navigator.userAgent;
+    var msie = ua.indexOf("MSIE "); 
+
+    if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))      // If Internet Explorer
+    {
+        txtArea1.document.open("txt/html","replace");
+        txtArea1.document.write(tab_text);
+        txtArea1.document.close();
+        txtArea1.focus(); 
+        sa=txtArea1.document.execCommand("SaveAs",true,"Say Thanks to Sumit.xls");
+    }  
+    else                 //other browser not tested on IE 11
+        sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));  
+
+    return (sa);
+}
+</script>
             @yield('custome-js')
 
 

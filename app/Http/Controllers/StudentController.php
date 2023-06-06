@@ -13,7 +13,6 @@ class StudentController extends Controller
     public function index()
     {
         $students = DB::select('select student.*, std_phone.* FROM student join std_phone on student.std_id = std_phone.std_id');
-
         return view('student.index', compact('students'));
     }
 

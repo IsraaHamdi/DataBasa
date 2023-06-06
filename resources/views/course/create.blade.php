@@ -19,7 +19,7 @@
                     <label>نوع المساق</label>
                     {!! Form::select('course_type',$types,null,['id'=>'course_type','class' => 'form-control']) !!}
                 </div>
-                
+                  
                 <div class="form-group">
                     <label>الكتاب</label>
                     {!! Form::select('book_id',$books,null,['id'=>'book_id','class' => 'form-control']) !!}
@@ -27,6 +27,10 @@
                 <div class="form-group">
                     <label>القسم</label>
                     {!! Form::select('dept_name',$departments,null,['id'=>'dept_name','class' => 'form-control']) !!}
+                </div>
+                <div class="form-group">
+                    <label>معيد المساق</label>
+                    {!! Form::select('instructor_id',$instructors,null,['id'=>'instructor_id','class' => 'form-control']) !!}
                 </div>
                 <div class="">
                     <button type="submit" class="btn btn-success btn-save mr-2">حفظ</button> 

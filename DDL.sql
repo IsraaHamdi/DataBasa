@@ -98,9 +98,10 @@ create table std_course (
 );
 
 create table attendance (
-	 std_id				varchar(8),
-	 lecture_id		varchar(8),
-	 isAttend			boolean,
+	 std_id		     varchar(8),
+	 lecture_id		 varchar(8),
+	 isAttend		 boolean,
+	 date	         Date,
 	 primary key (std_id, lecture_id),
 	 foreign key (std_id) references student (std_id)
 		on delete cascade,

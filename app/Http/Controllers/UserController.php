@@ -13,7 +13,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = DB::select('select user.*,user_phone.* FROM users join user_phone on users.user_id = user_phone.user_id');
+        $users = DB::select('select * FROM users join user_phone on users.user_id = user_phone.user_id');
         return view('user.index',compact('users'));
     }
 
@@ -44,7 +44,9 @@ class UserController extends Controller
         $user_id = DB::scalar( "select max(user_id) from users") + 1;
 
         DB::insert('insert into users (user_id,name,username,password,role_id) values (?,?,?,?,?)', [$user_id, $name,$username,Hash::make($password),$role_id]);
-        DB::insert('insert into user_phone (user_id,phone_num) values (?,?)', [$user_id, $phone_num]);
+        if($phone_num != ""){
+            DB::insert('insert into user_phone (user_id,phone_num) values (?,?)', [$user_id, $phone_num]);
+        }
 
         return redirect()->route('users.index')->with('success',"تم الاضافة   بنجاح");
     }

@@ -7,9 +7,6 @@ use Illuminate\Support\Facades\DB;
 
 class CourseController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $courses = DB::select('select * from course');
@@ -23,9 +20,11 @@ class CourseController extends Controller
     {
         $books = collect(DB::select('select * from books'))->pluck('name','book_id')->toArray();
         $departments = collect(DB::select('select * from department'))->pluck('dept_name','dept_name')->toArray();
+        $instructors = collect(DB::select('select * from instructor'))->pluck('name','instructor_id')->toArray();
+
         $types = ["1"=>"وجاهي","2"=>"عن بعد"];
 
-        return view('course.create',compact('books','departments','types')); 
+        return view('course.create',compact('books','departments','types','instructors')); 
     }
 
     /**
@@ -40,11 +39,14 @@ class CourseController extends Controller
         $course_type = ($request->has('course_type')) ? $data['course_type'] : "";
         $dept_name = ($request->has('dept_name')) ? $data['dept_name'] : "";
         $book_id = ($request->has('book_id')) ? $data['book_id'] : "";
+        $instructor_id = ($request->has('instructor_id')) ? $data['instructor_id'] : "";
 
+        
         //$course_id = ($request->has('course_id')) ? $data['course_id'] : "";
         $course_id = DB::scalar( "select max(course_id) from course") + 1;
 
-        DB::insert('insert into course (course_id,title,dept_name,credits,course_type,book_id) values (?, ? , ?,?, ? , ?)', [$course_id, $title,$dept_name,$credits,$course_type,$book_id]);
+        DB::insert('insert into course (course_id,title,dept_name,credits,course_type,book_id,instructor_id) values (?, ? , ?,?, ? , ?,?)',
+         [$course_id, $title,$dept_name,$credits,$course_type,$book_id,$instructor_id]);
 
 
         return redirect()->route('courses.index')->with('success',"تم الاضافة   بنجاح");
@@ -67,8 +69,9 @@ class CourseController extends Controller
         $books = collect(DB::select('select * from books'))->pluck('name','book_id')->toArray();
         $departments = collect(DB::select('select * from department'))->pluck('dept_name','dept_name')->toArray();
         $types = ["1"=>"وجاهي","2"=>"عن بعد"];
+        $instructors = collect(DB::select('select * from instructor'))->pluck('name','instructor_id')->toArray();
 
-        return view('course.edit',compact('books','departments','types','elm')); 
+        return view('course.edit',compact('books','departments','types','elm','instructors')); 
     }
 
     /**
@@ -82,10 +85,12 @@ class CourseController extends Controller
         $course_type = ($request->has('course_type')) ? $data['course_type'] : "";
         $dept_name = ($request->has('dept_name')) ? $data['dept_name'] : "";
         $book_id = ($request->has('book_id')) ? $data['book_id'] : "";
+        $instructor_id =  ($request->has('instructor_id')) ? $data['instructor_id'] : "";;
 
         //$course_id = ($request->has('course_id')) ? $data['course_id'] : "";
 
-        DB::update(' update course set title=? ,dept_name =? ,credits=? ,course_type=? ,book_id=? where course_id = ?', [ $title,$dept_name,$credits,$course_type,$book_id,$id]);
+        DB::update(' update course set title=? ,dept_name =? ,credits=? ,course_type=? ,book_id=?,instructor_id=? where course_id = ?', 
+        [ $title,$dept_name,$credits,$course_type,$book_id,$instructor_id,$id]);
 
 
         return redirect()->route('courses.index')->with('success',"تم التعديل   بنجاح");

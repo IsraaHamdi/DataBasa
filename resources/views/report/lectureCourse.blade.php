@@ -5,57 +5,53 @@
 		<div class="card-box">
         <div class="row">
                         <div class="col-md-12 mb-1 text-right">
-                            <a class="btn btn-success"  href='{{ route('students.create')}}'>اضافة</a>
+                            {!! Form::open(['route' => 'report.courses','class' => 'form-horizontal submit-form','placeholder'=>'dd','role' => 'form','files' => true,'method' => 'get']) !!}
 
+       <div class="form-group">
+                    <label >المساق</label>
+                    {!! Form::select('course_id',$courses,$request->course_id,['id'=>'course_id','class' => 'form-control d-inline col-6']) !!}
+
+                    <button type="submit" class="btn  col-1 mr-1 ml-1 btn-success btn-save mr-2">استعلام</button>
+                    <button class="btn btn-blue col-1" onclick="tableToExcel('saleriesemployees', 'report')">Excel</button>
+
+                </div>
+                
+
+        {!! Form::close() !!}
                         </div>
                 </div>
-		@if(count($students) > 0)
+		@if(count($lectures) > 0)
 		    <div class="row">
                 <div class="col-md-6 text-left">
 
                 </div>
                 <div class="col-md-6 text-right">
-                     <h5 style="font-weight: bolder" class="header smaller theme-color lighter blue p-1">عدد النتائج  :  {{count($students)}} </h5>
+                     <h5 style="font-weight: bolder" class="header smaller theme-color lighter blue p-1">عدد النتائج  :  {{count($lectures)}} </h5>
 
                 </div>
 		    </div>
 
                 <div class="row">
                     <div class="col-xs-12 table-responsive">
-
+                    <button class="btn btn-success" id="btnExport" onclick="fnExcelReport();"> EXPORT </button>
                         <table id="testTable" class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>الاسم</th>
-                                    <th> القسم</th>
-                                    <th>عمليات</th>
+                                    <th> اسم المحاضرة</th>
 
                                 </tr>
                             </thead>
                             <tbody>
                             <?php
                             ?>
-                            @foreach($students as $student)
+                            @foreach($lectures as $student)
                                 <?php
                                     $student = get_object_vars($student);
                                 ?>
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $student['first_name']. ' '.$student['second_name']. ' '.$student['third_name']. ' '.$student['last_name'] }}</td>
-                                    <td>{{ $student['dept_name'] }}</td>
-
-                                    <td>
-                                        <a class="btn btn-primary" href="{{ route('students.edit',$student['std_id'])}}">تعديل</a>
-
-                                        <form action="{{ route('students.destroy', $student['std_id']) }}" method="POST">
-                                        @csrf
-                                        @method("DELETE")
-                                        <button type="submit" class="btn btn-danger">حذف</button>
-                                        </form>
-
-
-                                    </td>
+                                    <td>{{ $student['name'] }}</td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -67,8 +63,4 @@
 		</div>
 	</div>
 </div>
-@endsection
-
-@section('custome-js')
-
 @endsection

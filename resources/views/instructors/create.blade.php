@@ -18,7 +18,11 @@
             <label>القسم</label>
             {!! Form::select('dept_name',$departments,null,['id'=>'dept_name','class' => 'form-control']) !!}
         </div>
-
+        
+        <div class="form-group">
+            <label>حساب المستخدم</label>
+            {!! Form::select('user_id',$users,null,['id'=>'user_id','class' => 'form-control']) !!}
+        </div>
         <div class="">
             <button type="submit" class="btn btn-success btn-save mr-2">حفظ</button>
 

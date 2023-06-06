@@ -31,6 +31,11 @@
                     {!! Form::select('dept_name',$departments,$elm[0]->dept_name,['id'=>'dept_name','class' => 'form-control','placeholder'=>'اختر القسم ']) !!}
 
                 </div>
+
+                <div class="form-group">
+                    <label>معيد المساق</label>
+                    {!! Form::select('instructor_id',$instructors,$elm[0]->instructor_id,['id'=>'instructor_id','class' => 'form-control']) !!}
+                </div>
                 <div class="">
     <button type="submit" class="btn btn-success btn-save mr-2">حفظ</button>
 </div>

@@ -8,7 +8,9 @@ use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\InstructorController;
-
+use App\Http\Controllers\StudentCourseController;
+use App\Http\Controllers\GeneralController;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,22 +23,34 @@ use App\Http\Controllers\InstructorController;
 |
 */
 Route::get('login', [LoginController::class, 'index'])->name('login');
-Route::post('custom-login', [LoginController::class, 'customLogin'])->name('login.custom'); 
+Route::post('custom-login', [LoginController::class, 'customLogin'])->name('login.custom');
 Route::get('home', [LoginController::class, 'home'])->name('home');
 Route::get('signout', [LoginController::class, 'signOut'])->name('signout');
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::resource('users', UserController::class );
-Route::resource('courses', CourseController::class );
-Route::resource('lectures', LectureController::class );
-Route::resource('attendance', AttendanceController::class );
-Route::resource('students', StudentController::class );
-Route::resource('instructors', InstructorController::class );
+// Route::group(['middleware' => ['auth']], function() {
+    Route::resource('users', UserController::class );
+    Route::resource('courses', CourseController::class );
+    Route::resource('lectures', LectureController::class );
+    Route::resource('attendance', AttendanceController::class );
+    Route::resource('students', StudentController::class );
+    Route::resource('instructors', InstructorController::class );
+    Route::resource('studentcourses', StudentCourseController::class );
+    Route::get('home', [LoginController::class, 'home'])->name('home');
+Route::get('signout', [LoginController::class, 'signOut'])->name('signout');
+
+Route::post('fetch-lecture', [GeneralController::class, 'fetchlecture']);
+Route::post('fetch-student', [GeneralController::class, 'fetchstudent']);
+
+// });
+Route::get('reportcourses', [ReportController::class, 'index'])->name('report.courses');
+Route::get('reportlectures', [ReportController::class, 'lecture'])->name('report.lectures');
+
+Route::get('lectureattendence', [ReportController::class, 'lectureattendence'])->name('report.lectureattendence');
+
+
 
 
 

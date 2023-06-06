@@ -6,12 +6,12 @@
     <div class="m-3 card p-5">
         <div class="form-group">
             <label>الاسم الأول</label>
-            <input value="{{old("first_name")}}" type="text" name="first_name" class="form-control" placeholder="الاسم الأول"
+            <input value="{{old("first_name")}}" type="text" name="first_name" class="form-control" placeholder="الاسم الأول"/>
         </div>
 
         <div class="form-group">
             <label>الاسم الثاني</label>
-            <input value="{{old("second_name")}}" type="text" name="second_name" class="form-control" placeholder="الاسم الثاني"/>/>
+            <input value="{{old("second_name")}}" type="text" name="second_name" class="form-control" placeholder="الاسم الثاني"/>
         </div>
 
         <div class="form-group">
