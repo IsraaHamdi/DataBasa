@@ -35,6 +35,7 @@ create table instructor (
 	 instructor_id		varchar(8),
 	 dept_name		varchar(20),
 	 user_id      varchar(8),
+	name     varchar(20),
 	 salary			numeric(8,2) check (salary > 29000),
 	 primary key (instructor_id),
 	 foreign key (user_id) references users (user_id),
@@ -93,7 +94,7 @@ create table std_course (
 	 foreign key (std_id) references student (std_id)
 		on delete cascade,
 	 foreign key (course_id) references course (course_id)
-		on delete cascade,
+		on delete cascade
 );
 
 create table attendance (
@@ -109,17 +110,15 @@ create table attendance (
 
 
 create table std_phone (
-  	  std_id  varchar(5),
+  	  std_id  varchar(8),
 	  phone_num  varchar(14),
 	  primary key (std_id,phone_num),
 	  foreign key (std_id) references student (std_id)
 );
 
 create table user_phone (
-	  user_id  varchar(5),
+	  user_id  varchar(8),
 	  phone_num  varchar(14),
 	  primary key (user_id,phone_num),
 	  foreign key (user_id) references users (user_id)
 )
-
-
