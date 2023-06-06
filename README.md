@@ -58,12 +58,13 @@ You should see your Laravel application up and running.
 
 <h2>Interfaces</h2>
 <span>You can shown the views in resources folder and then in views folder</span>
-<p>
-1. LoginPage => you can login as teacher or system manager.
-2. UserPage => you can see the user information and you can add and edit it.
-3. CoursePage => you can see the course information and you can add and edit it.
-4. StudentPage => you can see the student information and you can add and edit it.
-5. InstructorPage => you can see the instructor information and you can add and edit it.
-5. AttendancePage => you can see the attendance information and you can add and edit it.
-</p>
+<p>1. LoginPage => you can login as teacher or system manager.</p>
+<p>2. UserPage => you can see the user information and you can add and edit it.</p>
+<p>3. CoursePage => you can see the course information and you can add and edit it.</p>
+<p>4. StudentPage => you can see the student information and you can add and edit it.</p>
+<p>5. InstructorPage => you can see the instructor information and you can add and edit it.</p>
+<p>6. AttendancePage => you can see the attendance information and you can add and edit it.</p>
+
+<h2>Data Login </h2>
+<p>1. System Manager => username:israa@gmail.com , password:israa1234</p>
 

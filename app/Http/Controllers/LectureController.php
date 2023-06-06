@@ -9,7 +9,7 @@ class LectureController extends Controller
 {
     public function index()
     {
-        $lectures = DB::select('select * from leture');
+        $lectures = DB::select('select * from lecture');
         return view('lecture.index',compact('lectures'));
     }
 
@@ -42,7 +42,7 @@ class LectureController extends Controller
         $time_slot_id = ($request->has('time_slot_id')) ? $data['time_slot_id'] : "";
         //$course_id = ($request->has('course_id')) ? $data['course_id'] : "";
 
-        DB::insert('insert into leture (course_id, sec_id, semester, year, building, room_number, time_slot_id) values (?, ? , ?,?, ? , ?,?)', 
+        DB::insert('insert into lecture (course_id, sec_id, semester, year, building, room_number, time_slot_id) values (?, ? , ?,?, ? , ?,?)', 
         [$course_id, $sec_id,$semester,$year,$building,$room_number,$time_slot_id]);
 
 
@@ -89,7 +89,7 @@ class LectureController extends Controller
 
         //$course_id = ($request->has('course_id')) ? $data['course_id'] : "";
 
-        DB::update(' update leture set title=? ,dept_name =? ,credits=? ,course_type=? ,book_id=? where course_id = ?', [ $title,$dept_name,$credits,$course_type,$book_id,$id]);
+        DB::update(' update lecture set title=? ,dept_name =? ,credits=? ,course_type=? ,book_id=? where course_id = ?', [ $title,$dept_name,$credits,$course_type,$book_id,$id]);
 
 
         return redirect()->route('lectures.index')->with('success',"تم التعديل   بنجاح");

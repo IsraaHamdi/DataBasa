@@ -7,21 +7,21 @@
                         <div class="col-md-12 mb-1 text-right">
                             <button class="btn btn-blue" onclick="tableToExcel('saleriesemployees', 'report')">Excel</button>
 
-                            <a class="btn btn-success"  href='{{ route('students.create')}}'>اضافة</a>
+                            <a class="btn btn-success"  href='{{ route('courses.create')}}'>اضافة</a>
 
                         </div>
                 </div>
-		@if(count($students) > 0)
+		@if(count($courses) > 0)
 		    <div class="row">
                 <div class="col-md-6 text-left">
-
+                    
                 </div>
                 <div class="col-md-6 text-right">
-                     <h5 style="font-weight: bolder" class="header smaller theme-color lighter blue p-1">عدد النتائج  :  {{count($students)}} </h5>
+                     <h5 style="font-weight: bolder" class="header smaller theme-color lighter blue p-1">عدد النتائج  :  {{count($courses)}} </h5>
 
                 </div>
 		    </div>
-
+                
                 <div class="row">
                     <div class="col-xs-12 table-responsive">
                         <table id="saleriesemployees" class="table table-bordered">
@@ -30,39 +30,42 @@
                                     <th>#</th>
                                     <th>الاسم</th>
                                     <th> القسم</th>
+                                    <th> عدد الساعات</th>
                                     <th>عمليات</th>
 
                                 </tr>
                             </thead>
                             <tbody>
                             <?php
+                            $i = 1;
                             ?>
-                            @foreach($students as $student)
+                            @foreach($courses as $p)
                                 <?php
-                                    $student = get_object_vars($student);
+                                $p = get_object_vars($p);
                                 ?>
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $student['first_name']. ' '.$student['second_name']. ' '.$student['third_name']. ' '.$student['last_name'] }}</td>
-                                    <td>{{ $student['dept_name'] }}</td>
+                                    <td>{{ $i++ }}</td>
+                                    <td>{{ $p['title'] }}</td>
+                                    <td>{{ $p['dept_name'] }}</td>
+                                    <td>{{ $p['credits'] }}</td>
 
                                     <td>
-                                        <a class="btn btn-primary" href="{{ route('students.edit',$student['std_id'])}}">تعديل</a>
+                                        <a class="btn btn-primary" href="{{ route('courses.edit',$p['course_id'])}}">تعديل</a>
 
-                                        <form action="{{ route('students.destroy', $student['std_id']) }}" method="POST">
+                                        <form action="{{ route('courses.destroy', $p['course_id']) }}" method="POST">
                                         @csrf
                                         @method("DELETE")
                                         <button type="submit" class="btn btn-danger">حذف</button>
                                         </form>
 
-
+ 
                                     </td>
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
                     </div>
-
+       
                 </div>
         @endif
 		</div>

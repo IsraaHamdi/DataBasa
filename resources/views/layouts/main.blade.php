@@ -52,82 +52,79 @@
         <div class="sidebar-menu">
             <div class="sidebar-header">
                 <div class="logo">
-                    <a href="index.html"><img src="{{ URL::asset('assets/images/icon/logo.png')}}" alt="logo"></a>
+                    <a href="{{route('users.create')}}"><img src="{{ URL::asset('assets/images/icon/logo.png')}}" alt="logo"></a>
                 </div>
             </div>
             <div class="main-menu">
                 <div class="menu-inner">
                     <nav>
                         <ul class="metismenu" id="menu">
-                            <li class="active">
-                                <a href="javascript:void(0)" aria-expanded="true">
+                        <li class="active">
+                                <a href="{{route('home')}}" aria-expanded="true">
+                                    <i class="ti-dashboard"></i>
+                                    <span>الرئيسية</span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="{{route('users.index')}}" aria-expanded="true">
                                     <i class="ti-dashboard"></i>
                                     <span>المستخدمين</span>
                                 </a>
                                 <ul class="collapse">
-                                    <li class="active"><a href="index.html">اضافة</a></li>
-                                    <li><a href="index2.html">عرض</a></li>
+                                    <li class=""><a href="{{route('users.create')}}">اضافة</a></li>
+                                    <li><a href="{{route('users.index')}}">عرض</a></li>
                                 </ul>
                             </li>
                             <li class="">
-                                <a href="javascript:void(0)" aria-expanded="true">
+                                <a href="{{route('instructors.create')}}" aria-expanded="true">
                                     <i class="ti-user"></i>
                                     <span>المحاضرين</span>
                                 </a>
                                 <ul class="collapse">
-                                    <li class=""><a href="index.html">اضافة</a></li>
-                                    <li><a href="index2.html">عرض</a></li>
+                                    <li class=""><a href="{{route('instructors.index')}}">اضافة</a></li>
+                                    <li><a href="{{route('instructors.create')}}">عرض</a></li>
                                 </ul>
                             </li>
                             <li class="">
-                                <a href="javascript:void(0)" aria-expanded="true">
+                                <a href="{{route('users.index')}}" aria-expanded="true">
                                     <i class="ti-package"></i>
                                     <span>المساقات</span>
                                 </a>
                                 <ul class="collapse">
-                                    <li class=""><a href="index.html">اضافة</a></li>
-                                    <li><a href="index2.html">عرض</a></li>
+                                    <li class=""><a href="{{route('users.create')}}">اضافة</a></li>
+                                    <li><a href="{{route('users.index')}}">عرض</a></li>
                                 </ul>
                             </li>
+
                             <li class="">
-                                <a href="javascript:void(0)" aria-expanded="true">
-                                    <i class="ti-dashboard"></i>
-                                    <span>الشعب</span>
-                                </a>
-                                <ul class="collapse">
-                                    <li class=""><a href="index.html">اضافة</a></li>
-                                    <li><a href="index2.html">عرض</a></li>
-                                </ul>
-                            </li>
-                            <li class="">
-                                <a href="javascript:void(0)" aria-expanded="true">
+                                <a href="{{route('users.create')}}" aria-expanded="true">
                                     <i class="ti-book"></i>
                                     <span>المحاضرات</span>
                                 </a>
                                 <ul class="collapse">
-                                    <li class=""><a href="index.html">اضافة</a></li>
-                                    <li><a href="index2.html">عرض</a></li>
+                                    <li class=""><a href="{{route('users.create')}}">اضافة</a></li>
+                                    <li><a href="{{route('users.create')}}">عرض</a></li>
                                 </ul>
                             </li>
                             <li class="">
-                                <a href="javascript:void(0)" aria-expanded="true">
+                                <a href="{{route('students.index')}}" aria-expanded="true">
                                     <i class="ti-user"></i>
                                     <span>الطلبة</span>
                                 </a>
                                 <ul class="collapse">
-                                    <li class=""><a href="index.html">اضافة</a></li>
-                                    <li><a href="index2.html">عرض</a></li>
-                                    <li><a href="index2.html">تسجيل طالب في شعبة</a></li>
+                                    <li class=""><a href="{{route('students.create')}}">اضافة</a></li>
+                                    <li><a href="{{route('students.index')}}">عرض</a></li>
+                                    <li><a href="{{route('users.create')}}">تسجيل طالب في شعبة</a></li>
                                 </ul>
                             </li>
                             <li class="">
-                                <a href="javascript:void(0)" aria-expanded="true">
+                                <a href="{{route('users.create')}}" aria-expanded="true">
                                     <i class="ti-write"></i>
                                     <span>الحضور</span>
                                 </a>
                                 <ul class="collapse">
-                                    <li class=""><a href="index.html">اضافة</a></li>
-                                    <li><a href="index2.html">عرض</a></li>
+                                    <li class=""><a href="{{route('users.create')}}">اضافة</a></li>
+                                    <li><a href="{{route('users.create')}}">عرض</a></li>
                                 </ul>
                             </li>
                              
@@ -157,8 +154,10 @@
                             <li id="full-view"><i class="ti-fullscreen"></i></li>
                             <li id="full-view-exit"><i class="ti-zoom-out"></i></li>
                             <li class="settings-btn">
+                                <a href="{{route('signout')}}">
                                 <i class="ti-key"></i>
                                 خروج
+</a>
                             </li>
                         </ul>
                     </div>

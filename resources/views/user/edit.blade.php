@@ -7,13 +7,13 @@
         <label>الاسم</label>
         <input value="{{$elm[0]->name}}" type="text" name="name" class="form-control"  placeholder=" رقم سؤال"/>
     </div>
- 
+
     <div class="form-group">
                     <label>اسم المستخدم</label>
                     <input value="{{$elm[0]->username}}" type="text" name="username" class="form-control"  placeholder=""/>
                 </div>
-                
-                
+
+
     <div class="form-group">
                     <label>كلمة المرور</label>
                     <input value="{{$elm[0]->password}}" type="text" name="password" class="form-control"  placeholder=""/>
@@ -23,8 +23,11 @@
                     {!! Form::select('role_id',$roles,$elm[0]->role_id,['id'=>'role_id','class' => 'form-control','placeholder'=>'اختر نوع المساق']) !!}
 
                 </div>
-                
-                 
+                <div class="form-group">
+                <label>رقم الجوال</label>
+            <input value="{{$elm[0]->phone_num}}"  type="text" name="phone_num" class="form-control" placeholder=""/>
+        </div>
+
                 <div class="">
     <button type="submit" class="btn btn-success btn-save mr-2">حفظ</button>
 </div>
